@@ -16,6 +16,8 @@ def call_data():
 call_data()
 nodes = []
 out_count = []
+positive_count = []
+negative_count = []
 lng = int(len(ub['Node']))
 for i in range(0, lng):
 	index = ub['Node'][i]
@@ -25,6 +27,8 @@ for i in range(0, lng):
 	skip_flag = 0
 	loop_flag = 0
 	count = 0
+	count_p = 0
+	count_n = 0
 	break_flag = 0
 	chk_flag = 0
 	if index < 10540:
@@ -76,6 +80,11 @@ for i in range(0, lng):
 			else:
 				match_flag = 1
 				count = count + 1
+				sign = datab['Sign'][alpha_index]
+				if sign == 1:
+					count_p = count_p + 1
+				if sign == -1:
+					count_n = count_n + 1
 				#print('case 2')
 				alpha_index = alpha_index + 1
 				#print('match count', alpha_index)
@@ -120,6 +129,8 @@ for i in range(0, lng):
 			#print('while break')
 	nodes.append(index)
 	out_count.append(count)
+	positive_count.append(count_p)
+	negative_count.append(count_n)
 	if i%1000 == 0:
 		print('Done with ', i/lng*100, ' % with node ', index, ' count ', count)
 	if i%10000 == 0:
@@ -127,9 +138,16 @@ for i in range(0, lng):
 		numpy.savetxt("nodes.csv", arr, delimiter=",")
 		arr1 = numpy.asarray(out_count)
 		numpy.savetxt("out_count.csv", arr1, delimiter=",")		
-
+		arr = numpy.asarray(positive_count)
+		numpy.savetxt("countp.csv", arr, delimiter=",")
+		arr1 = numpy.asarray(negative_count)
+		numpy.savetxt("countn.csv", arr1, delimiter=",")		
 
 arr = numpy.asarray(nodes)
 numpy.savetxt("nodes.csv", arr, delimiter=",")
 arr1 = numpy.asarray(out_count)
 numpy.savetxt("out_count.csv", arr1, delimiter=",")
+arr = numpy.asarray(positive_count)
+numpy.savetxt("countp.csv", arr, delimiter=",")
+arr1 = numpy.asarray(negative_count)
+numpy.savetxt("countn.csv", arr1, delimiter=",")		
